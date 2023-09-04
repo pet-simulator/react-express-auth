@@ -1,8 +1,8 @@
-const knex = require('../knex');
-const { hashPassword, isValidPassword } = require('../../utils/auth-utils');
+const knex = require("../knex");
+const { hashPassword, isValidPassword } = require("../../utils/auth-utils");
 
 class User {
-  #passwordHash = null; // a private property
+  #passwordHash = null; 
 
   constructor({ id, username, password_hash }) {
     this.id = id;
@@ -11,20 +11,24 @@ class User {
   }
 
   static async list() {
-    const query = 'SELECT * FROM users';
+    const query = "SELECT * FROM users";
     const { rows } = await knex.raw(query);
     return rows.map((user) => new User(user));
   }
 
   static async find(id) {
-    const query = 'SELECT * FROM users WHERE id = ?';
-    const { rows: [user] } = await knex.raw(query, [id]);
+    const query = "SELECT * FROM users WHERE id = ?";
+    const {
+      rows: [user],
+    } = await knex.raw(query, [id]);
     return user ? new User(user) : null;
   }
 
   static async findByUsername(username) {
-    const query = 'SELECT * FROM users WHERE username = ?';
-    const { rows: [user] } = await knex.raw(query, [username]);
+    const query = "SELECT * FROM users WHERE username = ?";
+    const {
+      rows: [user],
+    } = await knex.raw(query, [username]);
     return user ? new User(user) : null;
   }
 
@@ -33,25 +37,34 @@ class User {
 
     const query = `INSERT INTO users (username, password_hash)
       VALUES (?, ?) RETURNING *`;
-    const { rows: [user] } = await knex.raw(query, [username, passwordHash]);
+    const {
+      rows: [user],
+    } = await knex.raw(query, [username, passwordHash]);
     return new User(user);
   }
 
   static async deleteAll() {
-    return knex.raw('TRUNCATE users;');
+    return knex.raw("TRUNCATE users;");
   }
 
-  update = async (username) => { // dynamic queries are easier if you add more properties
-    const [updatedUser] = await knex('users')
+  update = async (username) => {
+    // dynamic queries are easier if you add more properties
+    const [updatedUser] = await knex("users")
       .where({ id: this.id })
       .update({ username })
-      .returning('*');
+      .returning("*");
     return updatedUser ? new User(updatedUser) : null;
   };
 
-  isValidPassword = async (password) => (
-    isValidPassword(password, this.#passwordHash)
-  );
+  isValidPassword = async (password) =>
+    isValidPassword(password, this.#passwordHash);
 }
+
+// async function testUserModel() {
+//   User.create("ben", "123");
+//   const user = await User.find(8);
+//   console.log(user);
+// }
+// testUserModel();
 
 module.exports = User;

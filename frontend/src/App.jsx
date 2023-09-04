@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignUpPage from './pages/SignUp';
@@ -16,17 +16,21 @@ export default function App() {
     checkForLoggedInUser().then(setCurrentUser);
   }, [setCurrentUser]);
 
-  return <>
-    <SiteHeadingAndNav />
-    <main>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/sign-up' element={<SignUpPage />} />
-        <Route path='/users' element={<UsersPage />} />
-        <Route path='/users/:id' element={<UserPage />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-    </main>
-  </>;
+  return (
+    <div className="App">
+      <SiteHeadingAndNav />
+      <main>
+
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/sign-up' element={<SignUpPage />} />
+          <Route path='/users' element={<UsersPage />} />
+          <Route path='/users/:id' element={<UserPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
+
