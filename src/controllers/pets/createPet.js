@@ -12,11 +12,12 @@ const createPet = async (req, res) => {
       owner_id,
     });
 
-    res.status(201).json(newPet);
+    res.status(201).json({ success: true, data: newPet });
   } catch (error) {
     console.error("Error creating pet:", error);
-    res.status(500).send("An error occurred while creating the pet.");
+    res.status(500).json({ success: false, message: "Failed to create the pet." });
   }
 };
 
 module.exports = createPet;
+

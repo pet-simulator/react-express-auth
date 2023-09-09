@@ -1,29 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import PetQuestionnaireForm from '../components/PetQuestionnaireForm';
+import { listPetsByOwnerId, createPet, deletePet } from '../adapters/pet-adapter';
 import CurrentUserContext from '../contexts/current-user-context';
-import { listPetsByOwnerId, createPet, deletePet } from '../adapters/pet-adapter'; // Import the necessary API functions
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [userPets, setUserPets] = useState([]); // State to store the user's pets
+  const [userPets, setUserPets] = useState([]);
+  const [newPetName, setNewPetName] = useState(''); // State to capture the new pet name
   const { currentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
-    // Fetch the user's pets when the component mounts or when currentUser changes
-    if (currentUser) {
-      listUserPets(currentUser.id);
-    }
+    const listUserPets = async () => {
+      try {
+        if (currentUser) {
+          // Add a unique timestamp query parameter to the API request
+          const timestamp = Date.now();
+          const petsData = await listPetsByOwnerId(currentUser.id, timestamp);
+          setUserPets(petsData);
+        }
+      } catch (error) {
+        console.error('Error fetching user pets:', error);
+      }
+    };
+  
+    listUserPets();
   }, [currentUser]);
-
-  const listUserPets = async (owner_id) => {
-    try {
-      const petsData = await listPetsByOwnerId(owner_id);
-      setUserPets(petsData);
-    } catch (error) {
-      console.error('Error fetching user pets:', error);
-    }
-  };
+  
 
   const toggleForm = () => {
     if (currentUser) {
@@ -35,8 +38,7 @@ const HomePage = () => {
     try {
       const deleted = await deletePet(id);
       if (deleted) {
-        // Remove the deleted pet from the userPets list
-        setUserPets((prevUserPets) => prevUserPets.filter((pet) => pet.id !== pet));
+        setUserPets((prevUserPets) => prevUserPets.filter((pet) => pet.id !== id));
       } else {
         console.error('Failed to delete pet');
       }
@@ -46,14 +48,17 @@ const HomePage = () => {
   };
 
   const handleSubmit = async (formData) => {
-    // Create a new pet and add it to the userPets list
     try {
-      const [newPet, error] = await createPet(formData);
-      if (error) {
-        console.error('Failed to create pet:', error);
-      } else {
-        // Add the new pet to the userPets list
+      if (currentUser) {
+        const newPetData = { ...formData, owner_id: currentUser.id };
+        const newPet = await createPet(newPetData);
+
+        // Update the userPets state with the new pet
         setUserPets((prevUserPets) => [...prevUserPets, newPet]);
+
+        // Clear the form and hide it
+        setIsFormVisible(false);
+        setNewPetName(''); // Clear the pet name input
       }
     } catch (error) {
       console.error('Error creating pet:', error);
@@ -63,38 +68,34 @@ const HomePage = () => {
   return (
     <div className="home-page-wrapper">
       <button className="adopt-button" onClick={toggleForm}>
-        {currentUser ? (isFormVisible ? 'Close Questionnaire' : 'Adopt a New Pet') : (
+        {currentUser ? (
+          isFormVisible ? 'Close Questionnaire' : 'Adopt a New Pet'
+        ) : (
           <Link to="/login">Sign In to Access Questionnaire</Link>
         )}
       </button>
 
       {isFormVisible && currentUser && (
-        <PetQuestionnaireForm handleSubmit={handleSubmit} />
+        <div className="pet-form-container">
+          <PetQuestionnaireForm onSubmit={handleSubmit} />
+        </div>
       )}
 
-      {userPets.length > 0 && (
-        <div>
-          <h2>Your Pets</h2>
-          <ul>
-            {userPets.map((pet) => (
-              <li key={pet.id}>
-                <Link to={`/pets/${pet.id}`}>{pet.name}</Link>
-                <button onClick={() => handleDeletePet(pet.id)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <h2 className="home-page-title">Your Pets</h2>
+      {userPets.length > 0 ? (
+        <ul className="home-page-pet-list">
+          {userPets.map((pet) => (
+            <li key={pet.id} className="home-page-pet-item">
+              <Link to={`/pets/${pet.id}`} className="home-page-pet-link">{pet.pet_name}</Link>
+              <button className="home-page-delete-button" onClick={() => handleDeletePet(pet.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="home-page-no-pets">You have no pets.</p>
       )}
     </div>
   );
 };
 
 export default HomePage;
-
-
-
-
-
-
-
-

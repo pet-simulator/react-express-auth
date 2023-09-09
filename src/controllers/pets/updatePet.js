@@ -12,11 +12,6 @@ const updatePet = async (req, res) => {
     console.log("Request received with pet_id:", id);
     console.log("Session:", session);
 
-    // Uncomment the following lines to check authorization
-    // if (!isAuthorized(id, session)) {
-    //   console.log("Unauthorized access attempted.");
-    //   return res.sendStatus(403);
-    // }
 
     const pet = await Pet.getPet(id);
     if (!pet) {

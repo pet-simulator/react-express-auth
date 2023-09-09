@@ -9,12 +9,18 @@ export default function UsersPage() {
     getAllUsers().then(setUsers);
   }, []);
 
-  return <>
-    <h1>Users</h1>
-    <ul>
-      {
-        users.map((user) => <li key={user.id}><UserLink user={user} /></li>)
-      }
-    </ul>
-  </>;
+  return (
+    <div className="users-page">
+      <h1>Users</h1>
+      <ul className="user-list"> {/* Add a class for the <ul> */}
+        {users.map((user) => (
+          <li key={user.id} className="user-item"> {/* Add a class for the <li> */}
+            <UserLink user={user} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
+
+

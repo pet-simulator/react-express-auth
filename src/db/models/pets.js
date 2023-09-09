@@ -1,15 +1,15 @@
 const knex = require("../knex");
 
 class Pet {
-  constructor({ id, pet_name, species, owner_id }) {
+  constructor({ id, pet_name, species, owner_id, happy_level, clean_level, energy_level, hunger_level }) {
     this.id = id;
     this.pet_name = pet_name;
     this.species = species;
     this.owner_id = owner_id;
-    this.happy_level = 50;
-    this.clean_level = 50;
-    this.energy_level = 50;
-    this.hunger_level = 50;
+    this.happy_level = happy_level || 50; // Set default value for happy_level
+    this.clean_level = clean_level || 50; // Set default value for clean_level
+    this.energy_level = energy_level || 50; // Set default value for energy_level
+    this.hunger_level = hunger_level || 50; // Set default value for hunger_level
   }
 
   static async listPets() {
@@ -18,20 +18,47 @@ class Pet {
     return pets.rows.map((pet) => new Pet(pet));
   }
 
-  static async getPet(id) {
-    const query = "SELECT * FROM pets WHERE id = ?";
-    const {
-      rows: [pet],
-    } = await knex.raw(query, [id]);
-    return pet ? new Pet(pet) : null;
-  }
+static async getPet(id) {
+  const query = "SELECT id, pet_name, species, owner_id, happy_level, clean_level, energy_level, hunger_level FROM pets WHERE id = ?";
+  const {
+    rows: [pet],
+  } = await knex.raw(query, [id]);
+  return pet ? new Pet(pet) : null;
+}
+
 
   static async createPet({ pet_name, species, owner_id }) {
-    const query = `INSERT INTO pets (pet_name, species, owner_id)
-      VALUES (?, ?, ?) RETURNING *`;
+    // Set default values for the levels
+    const defaultLevels = {
+      happy_level: 50,
+      clean_level: 50,
+      energy_level: 50,
+      hunger_level: 50,
+    };
+
+    // Merge default levels with provided data
+    const petData = {
+      pet_name,
+      species,
+      owner_id,
+      ...defaultLevels,
+    };
+
+    const query = `INSERT INTO pets (pet_name, species, owner_id, happy_level, clean_level, energy_level, hunger_level)
+      VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *`;
+
     const {
       rows: [pet],
-    } = await knex.raw(query, [pet_name, species, owner_id]);
+    } = await knex.raw(query, [
+      petData.pet_name,
+      petData.species,
+      petData.owner_id,
+      petData.happy_level,
+      petData.clean_level,
+      petData.energy_level,
+      petData.hunger_level,
+    ]);
+
     return new Pet(pet);
   }
 
@@ -63,7 +90,7 @@ class Pet {
 
       return updatedPet ? new Pet(updatedPet) : null;
     } else {
-      return null; 
+      return null;
     }
   }
 
@@ -79,4 +106,5 @@ class Pet {
 }
 
 module.exports = Pet;
+
 

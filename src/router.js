@@ -23,7 +23,7 @@ Router.post("/pets", petsController.createPet);
 Router.delete("/pets/:id", petsController.deletePet);
 Router.get("/pets/:id", petsController.getPet);
 Router.get("/pets", petsController.listPets);
-Router.put('/pets/:id', petsController.updatePet);
+Router.patch('/pets/:id', petsController.updatePet);
 Router.get('/pets/owner/:owner_id', petsController.listPetsByOwnerId);
 
 // These actions require authentication (only valid logged in users can do these things)

@@ -1,32 +1,52 @@
+/* Global Styles */
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: linear-gradient(to right, #f9dbe7, #fef3e2);
+  font-family: "Comic Sans MS", cursive, sans-serif;
   margin: 0;
-  background-color: #E6E6FA;
+  padding: 0;
 }
 
-input, label {
-  display: block;
+p {
+  display: flex;
+  justify-content: center;
 }
 
-input {
-  margin-bottom: 1rem;
-}
-
+/* Header styles */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background:white;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  animation: bounceInDown 1s ease;
+}
+
+/* Keyframes for bounceInDown animation */
+@keyframes bounceInDown {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 #logo {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
-  color: #87CEEB;
+  color: #ff80b0;
+  transition: transform 0.2s ease;
 }
 
+#logo:hover {
+  transform: scale(1.1);
+}
+
+/* Navigation styles */
 nav ul {
   display: flex;
   gap: 1rem;
@@ -37,121 +57,417 @@ nav ul {
 
 nav a {
   display: block;
-  color: #87CEEB;
-}
-form {
-  padding: 2rem;
-  border: 1px solid #AAA;
-  width: 20rem;
-  margin: 2rem auto;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #F9F9F9;
-  text-align: center;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #CCC;
-  border-radius: 4px;
-}
-
-form button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-form button:hover {
-  background-color: #0056b3;
-}
-
-
-/* automatically added by NavLink component */
-.active {
-  color: #B0C592;
+  color: #ff80b0;
   font-weight: bold;
-  font-style: italic;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* HomePage.css */
-
-/* HomePage.css */
-
-.home-page-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+nav a:hover {
+  color: #ffc3a0;
 }
 
-.adopt-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.loading-message {
-  font-size: 16px;
-  color: #007bff;
-}
-
-.error-message {
-  font-size: 16px;
-  color: #ff0000;
-}
-
-h2 {
-  font-size: 24px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Style the "Delete" button */
-button {
-  background-color: #ff0000;
-  color: #fff;
-  padding: 5px 10px;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Style the links to individual pet pages */
+/* Links and hover effects */
 a {
   text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
+  color: #ffc3a0;
 }
 
 a:hover {
   text-decoration: underline;
 }
+
+/* auth.css */
+
+/* Common styles for form containers */
+form {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Styles for headings */
+h1 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Styles for labels */
+label {
+  margin-bottom: 5px;
+}
+
+/* Styles for input fields */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Styles for buttons */
+button:hover {
+  background-color: #ffc3a0;
+}
+
+/* Styles for error messages */
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Background for the pet page */
+.pet-page-background {
+  background-image: url('https://img.freepik.com/premium-vector/cartoon-living-house-home-inside-interior-house-with-stairs-teenage-luxury-home_730604-185.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container for status bars */
+.status-bars-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.status-bar {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.status-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+/* Styling for the labels and values */
+.status-label {
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.status-value {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Styling for different status levels */
+.low-status {
+  background-color: #ff6b6b;
+}
+
+.medium-status {
+  background-color: #ffd700;
+}
+
+.high-status {
+  background-color: #4caf50;
+}
+
+/* Styling for the page title */
+.pet-page-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: bounceIn 1s ease;
+}
+
+/* Styling for the buttons */
+.action-button,
+button,
+.adopt-button,
+.pet-form-container button,
+.home-page-delete-button,
+.logout-button {
+  background-color: #ff9900; /* Change this to your desired button color */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+  padding: 15px 30px; /* Increase padding to make the button bigger */
+  font-size: 20px; /* Increase font size to make the text larger */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #ff7700; /* Change this to the hover color you desire */
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: none;
+  }
+}
+
+/* Styling for the pet image */
+.pet-image {
+  width: 200px;
+  height: 200px;
+}
+
+/* Styling for the HomePage component */
+.home-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.adopt-button {
+  background-color: #a6a6a6;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 15px 0;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: none;
+  }
+}
+
+/* CSS for Styled Pet Form Container */
+
+.pet-form-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Additional styling for form elements within the container */
+.pet-form-container label {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+  text-align: left;
+}
+
+.pet-form-container input[type="text"],
+.pet-form-container input[type="email"],
+.pet-form-container input[type="password"],
+.pet-form-container textarea {
+  width: 75%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.pet-form-container button {
+  background-color: #ff6b6b;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 18px;
+}
+
+.pet-form-container button:hover {
+  background-color: #ff4d4d;
+  transform: scale(1.05);
+}
+
+.pet-form-container input {
+  width: 65%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.home-page-title {
+  font-size: 32px;
+  margin: 20px 0;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  animation: bounceIn 1s ease;
+}
+
+.home-page-pet-list {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.home-page-pet-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.home-page-pet-link {
+  font-size: 20px;
+  color: #ffc3a0;
+  text-decoration: none;
+}
+
+.home-page-delete-button {
+  background-color: #ff6b6b;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ff3333;
+  }
+}
+
+.home-page-no-pets {
+  font-size: 20px;
+  color: #555;
+}
+
+/* PetPage.css */
+
+/* Style for the container of warning messages */
+.cute-warnings {
+  background-color: #fff0a1;
+  border: 2px solid #ffb347;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for individual warning messages */
+.cute-warning {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ff4d4d;
+  text-transform: uppercase;
+}
+
+/* Style for UsersPage component */
+.users-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.users-page h1 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+}
+
+.user-item {
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center;
+  transition: transform 0.2s;
+  flex: 0 1 calc(33.33% - 20px); /* Adjust the width as needed */
+}
+
+.user-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-item img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.user-item .user-name {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}
+
+.user-item .user-email {
+  font-size: 14px;
+  color: #777;
+}
+
+.logout-button {
+  background-color: #ff7700;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
+}
+
+.userpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
