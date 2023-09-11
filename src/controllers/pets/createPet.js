@@ -11,8 +11,6 @@ const createPet = async (req, res) => {
       species,
       owner_id,
     });
-
-    res.status(201).json({ success: true, data: newPet });
   } catch (error) {
     console.error("Error creating pet:", error);
     res.status(500).json({ success: false, message: "Failed to create the pet." });

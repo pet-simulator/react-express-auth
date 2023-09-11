@@ -3,17 +3,83 @@ import { useParams } from 'react-router-dom';
 import { getPet, updatePet } from '../adapters/pet-adapter';
 import PetStatusBars from '../components/statusBar';
 import { Link } from 'react-router-dom';
+import backgroundMusic from '/assets/ background-music.mp3'
 
 const PetPage = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [petMessages, setPetMessages] = useState([]);
   const [happy, setHappy] = useState(0);
   const [clean, setClean] = useState(0);
   const [energy, setEnergy] = useState(0);
   const [hunger, setHunger] = useState(0);
+  const [encouragement, setEncouragement] = useState('Welcome');
+  const [isPlaying, setIsPlaying] = useState(false);
+  
+  useEffect(() => {
+    const encouragementInterval = setInterval(updateEncouragementMessage, 6000); 
+    return () => clearInterval(encouragementInterval);
+  }, []);
+  const toggleMusic = () => {
+
+    setIsPlaying(!isPlaying);
+  };
+  const encouragingMessages = [
+    "You're the best pet owner!",
+    "I love spending time with you!",
+    "Thanks for taking care of me!",
+    "You make me so happy!",
+    "I'm lucky to have you as my owner!",
+    "Your love and care mean the world to me!",
+    "I cherish every moment we share together.",
+    "Your kindness brightens my day!",
+    "You're the reason for my wagging tail!",
+    "Your presence makes everything better.",
+    "I appreciate all the treats and belly rubs!",
+    "You're the purr-fect companion!",
+    "I'm grateful for our adventures together.",
+    "Your hugs are my favorite!",
+    "You're the sunshine in my life!",
+    "Your smile warms my heart.",
+    "I'm so lucky to be loved by you!",
+    "Your cuddles are the best cuddles!",
+    "You're the most pawsome friend!",
+    "I'm feline great with you by my side!",
+    "Your laughter is music to my ears!",
+    "You light up my world with your kindness.",
+    "Every day with you is a tail-wagging day!",
+    "Your friendship is my greatest treasure.",
+    "I woof you more than words can express!",
+    "You're the peanut butter to my jelly!",
+    "Your care keeps me healthy and happy.",
+    "With you, every day is a treat!",
+    "Your presence is a gift I cherish.",
+    "You fill my world with joy and love!",
+    "You're the key to my happiness!",
+  ];
+  const updateEncouragementMessage = () => {
+    const randomIndex = Math.floor(Math.random() * encouragingMessages.length);
+    const randomMessage = encouragingMessages[randomIndex];
+    setEncouragement(randomMessage);
+  };
+
+
+  useEffect(() => {
+    const audioElement = new Audio(backgroundMusic);
+
+    if (isPlaying) {
+      audioElement.play();
+    } else {
+      audioElement.pause();
+    }
+
+    return () => {
+      audioElement.pause();
+    };
+  }, [isPlaying]);
+
+  
 
   useEffect(() => {
     const petDataFromLocalStorage = localStorage.getItem(`pet_${id}`);
@@ -57,7 +123,6 @@ const PetPage = () => {
       const attributes = ['happy', 'clean', 'energy', 'hunger'];
       const randomAttribute = attributes[Math.floor(Math.random() * attributes.length)];
       const decreaseAmount = Math.floor(Math.random() * 5) + 5;
-
       switch (randomAttribute) {
         case 'happy':
           setHappy((prevHappy) => Math.max(prevHappy - decreaseAmount, 0));
@@ -219,6 +284,9 @@ const PetPage = () => {
       <div>
         <h2 className="pet-page-title">{pet_name}'s Page</h2>
       </div>
+      <button className='music-Button' onClick={toggleMusic}>
+        {isPlaying ? 'Pause Music' : 'Play Music'}
+      </button>
       {showWarningMessage && (
         <div className="cute-warnings">
           {warningMessages.map((message, index) => (
@@ -227,7 +295,12 @@ const PetPage = () => {
             </div>
           ))}
         </div>
-      )}
+      )} 
+      <div className="encouragement">
+        <p className="encouragement-text">
+          {pet_name} says: "{encouragement}"
+        </p>
+      </div>
       <img
         className="pet-image"
         src={petImgSrc}
@@ -252,5 +325,4 @@ const PetPage = () => {
     </div>
   );
 };
-
 export default PetPage;

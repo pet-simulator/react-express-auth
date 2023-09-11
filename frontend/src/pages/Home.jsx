@@ -14,7 +14,6 @@ const HomePage = () => {
     const listUserPets = async () => {
       try {
         if (currentUser) {
-          // Add a unique timestamp query parameter to the API request
           const timestamp = Date.now();
           const petsData = await listPetsByOwnerId(currentUser.id, timestamp);
           setUserPets(petsData);
@@ -51,11 +50,12 @@ const HomePage = () => {
     try {
       if (currentUser) {
         const newPetData = { ...formData, owner_id: currentUser.id };
-        const newPet = await createPet(newPetData);
+        const [newPet,error] = await createPet(newPetData);
 
+        
         // Update the userPets state with the new pet
         setUserPets((prevUserPets) => [...prevUserPets, newPet]);
-
+        console.log(newPet)
         // Clear the form and hide it
         setIsFormVisible(false);
         setNewPetName(''); // Clear the pet name input

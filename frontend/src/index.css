@@ -1,3 +1,4 @@
+
 body {
   background: linear-gradient(to right, #f9dbe7, #fef3e2);
   font-family: "Comic Sans MS", cursive, sans-serif;
@@ -106,6 +107,7 @@ button:hover {
   align-items: center;
   justify-content: flex-end;
   color: #fff;
+  font-family: 'Arial', sans-serif;
 }
 .status-bars-container {
   position: absolute;
@@ -444,4 +446,17 @@ button,
 
 .game-over p {
   font-size: 18px; 
+}
+.encouragement {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px;
+}
+
+.encouragement-text {
+  font-size: 16px;
+  color: #333;
 }
